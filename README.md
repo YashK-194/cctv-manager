@@ -3,9 +3,6 @@
 A modern CCTV surveillance management system built with Next.js, featuring real-time incident detection, camera monitoring, and intelligent threat analysis.
 
 ## 🔮 If I Had More Time...
-
-### Security & Authentication
-
 Since I was out of town, I couldn’t fully dedicate myself to this project. I built it in around 4 hours while traveling on a train. Initially, I wasn’t planning to submit the assignment at all, knowing I wouldn’t make it home in time to properly complete it—but I figured something is better than nothing.
 
 If I had more time, I would have improved the UI, made the timeline fully functional, mapped incidents to flags on the timeline, and added multi-user and admin support. I was also considering integrating Firebase authentication and building it into a full-fledged, polished platform.
@@ -13,6 +10,8 @@ If I had more time, I would have improved the UI, made the timeline fully functi
 I understand this might not meet the full expectations, and I may not pass, but if you'd like to see the kind of work I usually do, feel free to check out my portfolio at https://yashk194.vercel.app. I also independently built Labro.in, a real production website with a cloud database, authentication, and over 100 active users.
 
 Thanks for taking the time to review this!
+
+### Security & Authentication
 
 - [ ] Implement user authentication and role-based access control
 - [ ] Add JWT token management and session security
