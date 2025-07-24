@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Camera {
+  id                     String     @id @default(cuid())
+  name                   String     @unique
+  location               String
+  isActive               Boolean    @default(true)
+  hasUnauthorizedAccess  Boolean    @default(false)
+  hasFaceRecognised      Boolean    @default(false)
+  hasMultipleEvents      Boolean    @default(false)
+  hasGunThreat           Boolean    @default(false)
+  hasTrafficCongestion   Boolean    @default(false)
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+  
+  // Relations
+  videos                 Video[]
+  incidents              Incident[]
+  
+  @@map("cameras")
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  cameraId    String
+  filename    String
+  path        String
+  duration    Int?     // Duration in seconds
+  fileSize    Int?     // File size in bytes
+  recordedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  camera      Camera   @relation(fields: [cameraId], references: [id], onDelete: Cascade)
+  incidents   Incident[]
+  
+  @@map("videos")
+}
+
+model Incident {
+  id          String       @id @default(cuid())
+  cameraId    String
+  videoId     String?
+  type        IncidentType
+  severity    Severity     @default(MEDIUM)
+  description String?
+  timestamp   Int          // Timestamp in seconds within the video
+  processed   Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  // Relations
+  camera      Camera       @relation(fields: [cameraId], references: [id], onDelete: Cascade)
+  video       Video?       @relation(fields: [videoId], references: [id], onDelete: SetNull)
+  
+  @@map("incidents")
+}
+
+enum IncidentType {
+  UNAUTHORIZED_ACCESS
+  FACE_RECOGNISED
+  MULTIPLE_EVENTS
+  GUN_THREAT
+  TRAFFIC_CONGESTION
+  SUSPICIOUS_ACTIVITY
+  INTRUSION
+  FIRE_ALARM
+  CROWD_DETECTION
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
